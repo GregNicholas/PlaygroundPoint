@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate')%>
+<div class="row">
+    <h1 class="text-center">New Playground</h1>
+    <div class="col-6 offset-3">
+        <form action="/playgrounds" method="POST" novalidate class="validated-form">
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" type="text" id="title" name="playground[title]" required>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="location">Location</label>
+                <input class="form-control" type="text" id="location" name="playground[location]" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Image Url</label>
+                <input class="form-control" type="text" id="image" name="playground[image]" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" type="text" id="description" name="playground[description]" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="title">Parking Spots</label>
+                <input class="form-control" type="text" id="parkingSpots" name="playground[parkingSpots]" >
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="iceCreamTruck">Ice Cream Truck Frequency</label>
+                <select class="form-select" id="iceCreamTruck" name="playground[iceCreamTruck]">
+                  <option value="Ice Cream Trucks at least once per day">Ice Cream Trucks at least once per day</option>
+                  <option value="Ice Cream Truck once per day or less">Ice Cream Truck once per day or less</option>
+                  <option value="Infrequent or no Ice Cream Trucks">Infrequent or no Ice Cream Trucks</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <label for="restrooms" class="input-group-text">Restrooms</label>
+                <select class="form-select" id="restrooms" name="playground[restrooms]">
+                  <option value="Yes">Public Restrooms: Yes</option>
+                  <option value="No">Public Restrooms: No</option>                          
+                </select>
+            </div>
+            <div class="mb-3"><button class="btn-success">Add Playground</button></div>
+        </form>
+        <a href="/playgrounds">Back to Playgrounds</a>        
+    </div>
+</div>
