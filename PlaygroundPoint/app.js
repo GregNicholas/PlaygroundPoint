@@ -100,6 +100,13 @@ app.post('/playgrounds/:id/reviews', validateReview, catchAsync(async (req, res)
     await review.save();
     await playground.save();
     res.redirect(`/playgrounds/${playground._id}`);
+}));
+
+app.delete('/playgrounds/:id/reviews/:reviewId', catchAsync(async (req, res) => {
+    const { id, reviewId } = req.params;
+    await Playground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/playgrounds/${id}`);
 }))
 
 app.all('*', (req, res, next) => {
