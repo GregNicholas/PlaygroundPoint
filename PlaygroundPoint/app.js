@@ -7,9 +7,11 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const passport = require('passport');
+const localStrategy = require('passport-local');
+const User = require('./models/user');
 
-
-
+const userRoutes = require('./routes/users');
 const playgroundRoutes = require('./routes/playgrounds');
 const reviewRoutes = require('./routes/reviews');
 
@@ -45,6 +47,13 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -55,6 +64,7 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use('/', userRoutes);
 app.use('/playgrounds', playgroundRoutes);
 app.use('/playgrounds/:id/reviews', reviewRoutes)
 
@@ -62,8 +72,6 @@ app.use('/playgrounds/:id/reviews', reviewRoutes)
 app.get('/', (req, res) => {
     res.render('home')
 });
-
-
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
