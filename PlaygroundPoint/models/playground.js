@@ -10,6 +10,10 @@ const PlaygroundSchema = new Schema({
     description: String,
     location: String,
     parkingSpots: Number,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     reviews: [
         {
             type: Schema.Types.ObjectId,

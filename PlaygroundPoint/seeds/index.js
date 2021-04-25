@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Playground = require('../models/playground');
+const Review = require('../models/review');
 const {descriptors, places} = require('./seedHelpers');
 const cities = require('./cities');
 
@@ -21,6 +22,7 @@ const chooseRandom = array => {
 
 const seedDB = async () => {
     await Playground.deleteMany({});
+    await Review.deleteMany({});
     for(let i=0; i<50; i++){
         const randLocation = chooseRandom(cities);
         const random = (Math.floor(Math.random()*3) + 1);
@@ -33,6 +35,7 @@ const seedDB = async () => {
             iceCream = "Infrequent or no Ice Cream Trucks"
         }
         const pGround = new Playground({
+            author: '607b342fc10efa1a270770c4',
             title: `${chooseRandom(descriptors)} ${chooseRandom(places)}`,
             iceCreamTruck: iceCream,
             restrooms: 'Yes',
