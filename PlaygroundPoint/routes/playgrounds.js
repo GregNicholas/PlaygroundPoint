@@ -9,12 +9,9 @@ const upload = multer({ storage });
 
 router.route('/')
     .get(playgrounds.index)
-    //.post(isLoggedIn, validatePlayground, playgrounds.create);
-    .post(upload.array('image'), (req, res) => {
-        console.log(req.body, req.files)
-        res.send('it worked')
-    })
-
+    .post(isLoggedIn, upload.array('image'), validatePlayground, playgrounds.create);
+ 
+      
 router.get('/new', isLoggedIn, playgrounds.renderNewForm);
 
 router.route('/:id')

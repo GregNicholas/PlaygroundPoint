@@ -41,7 +41,16 @@ const seedDB = async () => {
             restrooms: 'Yes',
             parkingSpots: 42,
             location: `${randLocation.city}, ${randLocation.state}`,
-            image: 'https://source.unsplash.com/collection/1677945/1600x900',
+            images: [
+                {
+                  url: 'https://res.cloudinary.com/mobyd/image/upload/v1619589360/PlaygroundPoint/zoty0ouib3qhkj3uh4pe.jpg',
+                  filename: 'PlaygroundPoint/zoty0ouib3qhkj3uh4pe'
+                },
+                {
+                  url: 'https://res.cloudinary.com/mobyd/image/upload/v1619589360/PlaygroundPoint/l5xj9onfwlaneimqylog.jpg',
+                  filename: 'PlaygroundPoint/l5xj9onfwlaneimqylog'
+                }
+              ],
             description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore quidem temporibus reprehenderit! Dolores, consequatur ipsum, eos, eum velit perspiciatis harum necessitatibus dolorum eaque totam reprehenderit delectus impedit laudantium facilis sunt.'
         });
         await pGround.save();

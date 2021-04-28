@@ -4,7 +4,7 @@ const playgroundSchema = Joi.object({
     playground: Joi.object({
         title: Joi.string().required(),
         parkingSpots: Joi.number().min(0),
-        image: Joi.string().required(),
+        //image: Joi.string().required(),
         location: Joi.string().required(),
         description: Joi.string().required(),
         restrooms: Joi.string().required(),

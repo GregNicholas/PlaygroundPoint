@@ -4,7 +4,12 @@ const Schema = mongoose.Schema;
 
 const PlaygroundSchema = new Schema({
     title: String,
-    image: String,
+    images: [
+        {
+            url: String,
+            filename: String,
+        }
+    ],
     iceCreamTruck: String,
     restrooms: String,
     description: String,
