@@ -49,7 +49,7 @@ module.exports.edit = catchAsync(async (req, res) => {
     res.redirect(`/playgrounds/${playground._id}`)
 })
 
-module.exports.delete = catchAsync(async (req, res) => {
+module.exports.destroy = catchAsync(async (req, res) => {
     const { id } = req.params;
     const playground = await Playground.findById(req.params.id);
     await Playground.findByIdAndDelete(id);
