@@ -16,7 +16,7 @@ router.get('/new', isLoggedIn, playgrounds.renderNewForm);
 
 router.route('/:id')
     .get(playgrounds.showPlayground)
-    .put(isLoggedIn, validatePlayground, isAuthor, playgrounds.edit)
+    .put(isLoggedIn, isAuthor, upload.array('image'), validatePlayground, playgrounds.edit)
     .delete(isLoggedIn, isAuthor, playgrounds.destroy);
 
 router.get('/:id/edit', isLoggedIn, isAuthor, playgrounds.renderEditForm);

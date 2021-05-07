@@ -8,7 +8,12 @@
     <div class="card mb-3">
         <div class="row">
             <div class="col-md-4">
+                <% if (playground.images.length) { %>
                 <img class="img-fluid" src="<%=playground.images[0].url%>" alt="">
+                <% } else { %>
+                    <img alt="" class="img-fluid"
+                        src="https://res.cloudinary.com/mobyd/image/upload/v1620363986/PlaygroundPoint/playground_default_tvxots.png">
+                <% } %>
             </div>
             <div class="col-md-8">
                 <div class="card-body">

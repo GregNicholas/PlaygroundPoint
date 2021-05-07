@@ -41,13 +41,16 @@ const seedDB = async () => {
             restrooms: 'Yes',
             parkingSpots: 42,
             location: `${randLocation.city}, ${randLocation.state}`,
+            geometry: { 
+                coordinates: [ 102.248053, 2.219776 ], 
+                type: 'Point' },
             images: [
                 {
-                  url: 'https://res.cloudinary.com/mobyd/image/upload/v1619589360/PlaygroundPoint/zoty0ouib3qhkj3uh4pe.jpg',
+                  url: 'https://res.cloudinary.com/mobyd/image/upload/v1619581365/PlaygroundPoint/tjk9gybgq22qsjexsdmg.jpg',
                   filename: 'PlaygroundPoint/zoty0ouib3qhkj3uh4pe'
                 },
                 {
-                  url: 'https://res.cloudinary.com/mobyd/image/upload/v1619589360/PlaygroundPoint/l5xj9onfwlaneimqylog.jpg',
+                  url: 'https://res.cloudinary.com/mobyd/image/upload/v1619586947/PlaygroundPoint/d9zpke6ux3oe6pdvq7rs.jpg',
                   filename: 'PlaygroundPoint/l5xj9onfwlaneimqylog'
                 }
               ],

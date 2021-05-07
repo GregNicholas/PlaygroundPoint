@@ -1,5 +1,9 @@
 const Playground = require('../models/playground');
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 const catchAsync = require('../utils/catchAsync');
+const { cloudinary } = require('../cloudinary');
 
 module.exports.index = catchAsync(async (req, res) => {
     const playgrounds = await Playground.find({});
@@ -11,7 +15,12 @@ module.exports.renderNewForm = (req, res) => {
 }
 
 module.exports.create = catchAsync(async (req, res, next) => {
+    const geoData = await geocoder.forwardGeocode({
+        query: req.body.playground.location,
+        limit: 1,
+    }).send();
     const playground = new Playground(req.body.playground);
+    playground.geometry = geoData.body.features[0].geometry;
     playground.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     playground.author = req.user._id;
     await playground.save();
@@ -47,14 +56,25 @@ module.exports.renderEditForm = catchAsync(async (req, res) => {
 module.exports.edit = catchAsync(async (req, res) => {
     const { id } = req.params;
     const playground = await Playground.findByIdAndUpdate(id, { ...req.body.playground });
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }))
+    playground.images.push(...imgs);
+    await playground.save();
+    if (req.body.deleteImages) {
+        for (let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename);
+        }
+        await playground.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } });
+    }
     req.flash('success', 'Successfully updated playground!')
     res.redirect(`/playgrounds/${playground._id}`)
 })
 
 module.exports.destroy = catchAsync(async (req, res) => {
     const { id } = req.params;
-    const playground = await Playground.findById(req.params.id);
-    await Playground.findByIdAndDelete(id);
+    const playground = await Playground.findByIdAndDelete(id);
+    for (let image of playground.images) {
+        await cloudinary.uploader.destroy(image.filename);
+    }
     req.flash('success', `Deleted playground ${playground.title}!`)
     res.redirect(`/playgrounds`);
 })

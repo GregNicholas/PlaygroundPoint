@@ -9,7 +9,8 @@ const playgroundSchema = Joi.object({
         description: Joi.string().required(),
         restrooms: Joi.string().required(),
         iceCreamTruck: Joi.string(),
-    }).required()
+    }).required(),
+    deleteImages: Joi.array()
 });
 
 const reviewSchema = Joi.object({
