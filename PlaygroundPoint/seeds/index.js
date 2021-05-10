@@ -23,8 +23,9 @@ const chooseRandom = array => {
 const seedDB = async () => {
     await Playground.deleteMany({});
     await Review.deleteMany({});
-    for(let i=0; i<50; i++){
-        const randLocation = chooseRandom(cities);
+    for(let i=0; i<300; i++){
+        //const randLocation = chooseRandom(cities);
+        const random1000 = Math.floor(Math.random() * 1000);
         const random = (Math.floor(Math.random()*3) + 1);
         let iceCream = '';
         if(random === 1) {
@@ -40,10 +41,14 @@ const seedDB = async () => {
             iceCreamTruck: iceCream,
             restrooms: 'Yes',
             parkingSpots: 42,
-            location: `${randLocation.city}, ${randLocation.state}`,
+            location: `${cities[random1000].city}, ${cities[random1000].state}`,
             geometry: { 
-                coordinates: [ 102.248053, 2.219776 ], 
-                type: 'Point' },
+                type: 'Point',
+                coordinates: [
+                    cities[random1000].longitude,
+                    cities[random1000].latitude
+                ],
+            },
             images: [
                 {
                   url: 'https://res.cloudinary.com/mobyd/image/upload/v1619581365/PlaygroundPoint/tjk9gybgq22qsjexsdmg.jpg',

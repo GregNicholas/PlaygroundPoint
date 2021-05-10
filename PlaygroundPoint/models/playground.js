@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Review = require('./review');
 const Schema = mongoose.Schema;
+const opts = { toJSON: { virtuals: true }};
 
 const ImageSchema = new Schema({
     url: String,
@@ -40,6 +41,11 @@ const PlaygroundSchema = new Schema({
             ref: 'Review',
         }
     ]
+}, opts);
+
+PlaygroundSchema.virtual('properties.popUpMarkup').get(function() {
+    return `<strong><a href="/playgrounds/${this._id}">${this.title}</a></strong>
+    <p>${this.description.substring(0,20)}...</p>`
 });
 
 PlaygroundSchema.post('findOneAndDelete', async function (doc) {
