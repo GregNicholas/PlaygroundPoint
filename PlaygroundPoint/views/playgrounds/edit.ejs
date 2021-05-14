@@ -1,7 +1,12 @@
 <% layout('layouts/boilerplate')%>
+<div class="container justify-content-center align-items-center mt-5">
 <div class="row">
-    <h1 class="text-center fw-bold">Edit Playground</h1>
-    <div class="col-6 offset-3 fw-bold">
+    
+    <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4 fw-bold">
+        <div class="card shadow">
+            <div class="card-body">
+            <h1 class="text-center fw-bold">Edit Playground</h1>
+            
         <form action="/playgrounds/<%=playground._id%>?_method=PUT" method="POST" 
             novalidate class="validated-form" 
             enctype="multipart/form-data">
@@ -36,9 +41,16 @@
             <div class="input-group mb-3">
                 <label for="restrooms" class="input-group-text">Restrooms</label>
                 <select class="form-select" id="restrooms" name="playground[restrooms]">
-                  <option selected>Public restrooms: <%=playground.restrooms%></option>
+                  <% if (playground.restrooms == 'Yes') { %> 
+                    <option value="Yes">Public Restrooms: Yes</option>
+                    <option value="No">Public Restrooms: No</option> 
+                    <% } else { %>
+                        <option value="No">Public Restrooms: No</option>  
+                        <option value="Yes">Public Restrooms: Yes</option>
+                        <% } %>
+                  <!-- <option selected>Public restrooms: <%=playground.restrooms%></option>
                   <option value="Yes">Public Restrooms: Yes</option>
-                  <option value="No">Public Restrooms: No</option>                          
+                  <option value="No">Public Restrooms: No</option>                           -->
                 </select>
             </div>
             <div class="mb-3">
@@ -67,4 +79,7 @@
         </form>
         <a href="/playgrounds/<%=playground._id%>">Back to <%= playground.title%></a>        
     </div>
+</div>
+</div>
+</div>
 </div>

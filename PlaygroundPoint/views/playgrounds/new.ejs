@@ -1,11 +1,16 @@
 <% layout('layouts/boilerplate')%>
+<div class="container justify-content-center align-items-center mt-5">
 <div class="row">
+    <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+    <div class="card shadow">
+        <div class="card-body">
     <h1 class="text-center fw-bold">New Playground</h1>
-    <div class="col-6 offset-3">
+    
+        
         <form action="/playgrounds" method="POST" novalidate class="validated-form fw-bold" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="title">Title</label>
-                <input class="form-control" type="text" id="title" name="playground[title]" required>
+                <input class="form-control" type="text" id="title" name="playground[title]" autofocus required>
                 <div class="valid-feedback">Looks good!</div>
             </div>
             <div class="mb-3">
@@ -14,7 +19,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="formFileMultiple">Add Images</label>
-                <input type="file" class="form-control" name="image" id="formFileMultiple" multiple required>
+                <input type="file" class="form-control" name="image" id="formFileMultiple" multiple>
                 <div class="invalid-feedback">
                     This playground would look much better with a picture.
                 </div>
@@ -42,12 +47,16 @@
             <div class="input-group mb-3">
                 <label for="restrooms" class="input-group-text">Restrooms</label>
                 <select class="form-select" id="restrooms" name="playground[restrooms]">
-                  <option value="Yes">Public Restrooms: Yes</option>
-                  <option value="No">Public Restrooms: No</option>                          
+                  <option value="Yes">Has public restrooms</option>
+                  <option value="No">No public restrooms on site</option>   
+                  <option value="Unknown">Unknown</option>                       
                 </select>
             </div>
             <div class="mb-3"><button class="btn-success">Add Playground</button></div>
         </form>
         <a href="/playgrounds">Back to Playgrounds</a>        
     </div>
+</div>
+</div>
+</div>
 </div>

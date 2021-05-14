@@ -46,7 +46,7 @@
           </div>
     </div>
     <div class="col-6">
-      <div id='map' style='width: 400px; height: 300px;'></div>
+      <div id='map'></div>
       <% if (currentUser && !playground.reviews.some(review => review.author.equals(currentUser._id))) { %>
       <h2>Leave a Review</h2>
           <form class="mb-3 validated-form" action="/playgrounds/<%= playground._id%>/reviews" method="POST" novalidate>
