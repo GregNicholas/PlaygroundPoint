@@ -23,7 +23,7 @@ const chooseRandom = array => {
 const seedDB = async () => {
     await Playground.deleteMany({});
     await Review.deleteMany({});
-    for(let i=0; i<300; i++){
+    for(let i=0; i<100; i++){
         //const randLocation = chooseRandom(cities);
         const random1000 = Math.floor(Math.random() * 1000);
         const random = (Math.floor(Math.random()*3) + 1);
