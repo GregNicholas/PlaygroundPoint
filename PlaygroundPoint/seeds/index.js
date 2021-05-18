@@ -1,10 +1,18 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
 const mongoose = require('mongoose');
 const Playground = require('../models/playground');
 const Review = require('../models/review');
 const {descriptors, places} = require('./seedHelpers');
 const cities = require('./cities');
 
-mongoose.connect('mongodb://localhost:27017/playground-point', {
+const MongoDBStore = require('connect-mongo');
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/playground-point';
+
+
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true    
