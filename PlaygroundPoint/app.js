@@ -19,10 +19,12 @@ const helmet = require('helmet');
 const userRoutes = require('./routes/users');
 const playgroundRoutes = require('./routes/playgrounds');
 const reviewRoutes = require('./routes/reviews');
-//const dbUrl = process.env.DB_URL
-//'mongodb://localhost:27017/playground-point'
 
-mongoose.connect('mongodb://localhost:27017/playground-point', {
+const MongoDBStore = require('connect-mongo');
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/playground-point';
+
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -41,9 +43,23 @@ app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+const secret = process.env.SECRET || 'SandyJoy';
+const store = MongoDBStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret,
+    },
+});
+
+store.on("error", function(e) {
+    console.log("SESSION STORE ERROR", e)
+});
+
 const sessionOptions = { 
+    store,
     name: 'session',
-    secret: 'SandyJoy', 
+    secret, 
     resave: false, 
     saveUninitialized: true,
     cookie: {
@@ -113,7 +129,9 @@ passport.deserializeUser(User.deserializeUser());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(mongoSanitize());
+app.use(mongoSanitize({
+    replaceWith: '_'
+}));
 
 app.use((req, res, next) => {
     if (!['/login', '/', '/register', '/test', '/playgrounds/test'].includes(req.originalUrl)) {
