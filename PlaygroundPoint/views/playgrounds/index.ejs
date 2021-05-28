@@ -1,8 +1,18 @@
 <% layout('layouts/boilerplate')%>
 <div id="cluster-map"></div>
-<h1>All playgrounds</h1>
-<div>
-    <a href="/playgrounds/new">Add Playground</a>
+<div class="container">
+    <h1>All playgrounds</h1>
+    <div>
+        <a href="/playgrounds/new">Add Playground</a>
+    </div>
+    <div>
+        <form action="/playgrounds" method="GET" class="row gx-3 gy-2">
+            <div class="col-sm-3">
+                <input type="text" name="search" placeholder="Playground Search" class="form-control">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
 </div>
 <% for (let playground of playgrounds) {%>
     <div class="card mb-3">

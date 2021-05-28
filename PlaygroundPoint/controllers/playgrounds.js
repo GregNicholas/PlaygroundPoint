@@ -6,9 +6,31 @@ const catchAsync = require('../utils/catchAsync');
 const { cloudinary } = require('../cloudinary');
 
 module.exports.index = catchAsync(async (req, res) => {
-    const playgrounds = await Playground.find({});
-    res.render('playgrounds/index', {playgrounds});
-})
+    if(req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        // Get all playgrounds from DB
+        await Playground.find({title: regex}, function(err, allPlaygrounds){
+           if(err){
+               console.log(err);
+           } else {
+              if(allPlaygrounds.length < 1) {
+                  req.flash("error", "Campground not found");
+                  return res.redirect("playgrounds");
+              }
+              res.render("playgrounds/index",{playgrounds:allPlaygrounds, noMatch: noMatch});
+           }
+        });
+    } else {
+        // Get all playgrounds from DB
+        Playground.find({}, function(err, allPlaygrounds){
+           if(err){
+               console.log(err);
+           } else {
+              res.render("playgrounds/index",{playgrounds:allPlaygrounds, noMatch: noMatch});
+           }
+        });
+    }
+});
 
 module.exports.renderNewForm = (req, res) => {
     res.render('playgrounds/new');
@@ -77,3 +99,7 @@ module.exports.destroy = catchAsync(async (req, res) => {
     req.flash('success', `Deleted playground ${playground.title}!`)
     res.redirect(`/playgrounds`);
 })
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}

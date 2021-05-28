@@ -44,7 +44,7 @@ const seedDB = async () => {
             iceCream = "Infrequent or no Ice Cream Trucks"
         }
         const pGround = new Playground({
-            author: '607b342fc10efa1a270770c4',
+            author: '60a21f2f6072a2644819004f',
             title: `${chooseRandom(descriptors)} ${chooseRandom(places)}`,
             iceCreamTruck: iceCream,
             restrooms: 'Yes',
