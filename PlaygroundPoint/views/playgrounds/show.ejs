@@ -34,7 +34,7 @@
               <li class="list-group-item">Public Restrooms: <%= playground.restrooms %></li>
               <li class="list-group-item">Parking Spots: <%= playground.parkingSpots %></li>
             </ul>
-            <% if(currentUser && playground.author.equals(currentUser._id)) {%>
+            <% if(currentUser && playground.author.equals(currentUser._id) || currentUser && currentUser.isAdmin) {%>
             <div class="card-body">
                 <a class="card-link btn btn-warning" href="/playgrounds/<%= playground._id%>/edit">Edit</a>
                 <form class="d-inline" action="/playgrounds/<%=playground._id%>?_method=DELETE" method="POST">
@@ -47,7 +47,7 @@
     </div>
     <div class="col-6">
       <div id='map'></div>
-      <% if (currentUser && !playground.reviews.some(review => review.author.equals(currentUser._id))) { %>
+      <% if (currentUser && !playground.reviews.some(review => review.author.equals(currentUser._id)) || currentUser && currentUser.isAdmin) { %>
       <h2>Leave a Review</h2>
           <form class="mb-3 validated-form" action="/playgrounds/<%= playground._id%>/reviews" method="POST" novalidate>
             <div class="mb-3">
@@ -84,7 +84,7 @@
                 </p>
                 <h6 class="card-subtitle text-muted">Review by <%=review.author.username%></h6>
                 <p class="card-text"><%=review.body%></p>
-                <% if(currentUser && review.author.equals(currentUser._id)) {%>
+                <% if(currentUser && review.author.equals(currentUser._id) || currentUser && currentUser.isAdmin) {%>
                 <form action="/playgrounds/<%=playground._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
                   <button class="btn btn-sm btn-danger">Delete</button>
                 </form>

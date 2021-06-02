@@ -13,6 +13,9 @@ module.exports.registerUser = catchAsync(async (req, res, next) => {
     try{
     const { email, username, password } = req.body
     const user = new User({email, username});
+    if(req.body.adminCode === "SandyIsAJoy!") {
+        user.isAdmin = true;
+    }
     const newUser = await User.register(user, password);
     req.login(newUser, err => {
         if(err){

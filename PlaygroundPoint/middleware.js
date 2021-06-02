@@ -24,7 +24,7 @@ module.exports.validatePlayground = (req, res, next) => {
 module.exports.isAuthor = async (req, res, next) => {
     const {id} = req.params;
     const playground = await Playground.findById(id);
-    if(!playground.author.equals(req.user._id)) {
+    if(!playground.author.equals(req.user._id) && !req.user.isAdmin) {
         req.flash('error', 'You do not have permission to do that');
         return res.redirect(`/playgrounds/${id}`);
     }
@@ -34,7 +34,7 @@ module.exports.isAuthor = async (req, res, next) => {
 module.exports.isReviewAuthor = async (req, res, next) => {
     const { id, reviewId } = req.params;
     const review = await Review.findById(reviewId);
-    if(!review.author.equals(req.user._id)) {
+    if(!review.author.equals(req.user._id) && !req.user.isAdmin) {
         req.flash('error', 'You do not have permission to do that');
         return res.redirect(`/playgrounds/${id}`);
     }

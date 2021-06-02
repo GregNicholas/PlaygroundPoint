@@ -14,10 +14,10 @@ module.exports.index = catchAsync(async (req, res) => {
                console.log(err);
            } else {
               if(allPlaygrounds.length < 1) {
-                  req.flash("error", "Campground not found");
+                  req.flash("error", "Playground not found");
                   return res.redirect("playgrounds");
               }
-              res.render("playgrounds/index",{playgrounds:allPlaygrounds, noMatch: noMatch});
+              res.render("playgrounds/index",{playgrounds:allPlaygrounds});
            }
         });
     } else {
@@ -26,7 +26,7 @@ module.exports.index = catchAsync(async (req, res) => {
            if(err){
                console.log(err);
            } else {
-              res.render("playgrounds/index",{playgrounds:allPlaygrounds, noMatch: noMatch});
+              res.render("playgrounds/index",{playgrounds:allPlaygrounds});
            }
         });
     }
