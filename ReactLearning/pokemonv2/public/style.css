@@ -1,0 +1,31 @@
+.col {
+    /* columns: 2 auto; */
+    margin: 0 10% 0 10%;
+}
+
+.onePokemon {
+    border: 10px outset yellow;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    height: auto;
+    justify-content: center;
+}
+
+.pokeName {
+    display: flex;
+    justify-content: center;
+    font-family: 'Miltonian', cursive;
+    font-size: 1.75rem;
+    color: darkblue;
+}
+
+.pic {
+    border: 1px solid blue;
+    margin: 0;
+    justify-self: center;
+}
+
+.abilities {
+    color: blue;
+}
